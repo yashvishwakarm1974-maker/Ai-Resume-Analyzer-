@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Resume Screening Tool</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<!-- Background Glow -->
+<div class="bg-glow glow1"></div>
+<div class="bg-glow glow2"></div>
+
+<div class="main-container fade-in">
+
+    <!-- Main Card -->
+    <div class="card glass">
+
+        <h1 class="title">
+            AI Resume Screening Tool
+        </h1>
+
+        <p class="subtitle">
+            Smart ATS Resume Analyzer for Modern Hiring
+        </p>
+
+        <form method="POST"
+              enctype="multipart/form-data">
+
+            <label class="label">
+                Job Description
+            </label>
+
+            <textarea
+                name="job_description"
+                placeholder="Paste job description here..."
+                required></textarea>
+
+            <!-- Upload Box -->
+            <label class="upload-box">
+
+                <input
+                    type="file"
+                    name="resume"
+                    accept=".pdf,.docx"
+                    required>
+
+                <div class="upload-content">
+                    <div class="upload-icon">📄</div>
+                    <span>Upload Your Resume</span>
+                    <small>PDF or DOCX</small>
+                </div>
+
+            </label>
+
+            <!-- Button -->
+            <button type="submit">
+                Analyze Resume
+            </button>
+
+        </form>
+
+    </div>
+
+    {% if score is not none %}
+
+    <!-- Results -->
+    <div class="result-card glass fade-up">
+
+        <h2>ATS Score</h2>
+
+        <div class="score-circle">
+            {{ score }}%
+        </div>
+
+        <div class="grid">
+
+            <!-- Matched -->
+            <div class="info-box">
+
+                <h3>✅ Matched Skills</h3>
+
+                <ul>
+                    {% for word in matched_keywords %}
+                        <li>{{ word }}</li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+            <!-- Missing -->
+            <div class="info-box">
+
+                <h3>❌ Missing Skills</h3>
+
+                <ul>
+                    {% for word in missing_keywords %}
+                        <li>{{ word }}</li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
